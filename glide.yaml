@@ -1,0 +1,12 @@
+package: github.com/zhiruchen/gospider
+import:
+- package: github.com/go-redis/redis
+  version: ^6.13.2
+- package: github.com/parnurzeal/gorequest
+  version: ^0.2.15
+- package: go.uber.org/zap
+  version: ^1.9.1
+- package: golang.org/x/net
+  repo: https://github.com/golang/net.git
+  subpackages:
+  - publicsuffix
