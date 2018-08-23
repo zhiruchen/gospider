@@ -93,6 +93,7 @@ type Engine struct {
 	proxyURLQueueName string
 	urlChs            chan string
 
+	reqer  downloader.Requester
 	prep   downloader.Preparer
 	proxy  proxy.SpiderProxy
 	dl     downloader.Downloader
@@ -128,6 +129,10 @@ func NewEngine(redisClient *redis.Client, name string, urls []string, opts ...En
 
 func (e *Engine) SetProxy(pry proxy.SpiderProxy) {
 	e.proxy = pry
+}
+
+func (e *Engine) SetRequester(reqer downloader.Requester) {
+	e.reqer = reqer
 }
 
 func (e *Engine) SetDownloader(dl downloader.Downloader) {
@@ -214,7 +219,7 @@ func (e *Engine) crawl(url string) {
 		return
 	}
 
-	if err := e.enQueueURLs(targetURLs); err != nil {
+	if err = e.enQueueURLs(targetURLs); err != nil {
 		log.Logger.Error("enqueue urls err", zap.Error(err))
 	}
 

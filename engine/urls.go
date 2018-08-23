@@ -53,11 +53,16 @@ Loop:
 	for {
 		select {
 		case <-ticket.C:
+		Inner:
 			for i := 1; i <= e.opts.ConcurrentReqNum; i++ {
 				url, err := e.redisClient.LPop(e.queueName).Result()
 				if err != nil {
 					log.Logger.Error("redis lpop url err", zap.Error(err))
 					continue Loop
+				}
+
+				if url == "" {
+					continue Inner
 				}
 
 				select {

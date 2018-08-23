@@ -42,5 +42,5 @@ func (dl *defaultDownloader) Download(url string) ([]byte, error) {
 }
 
 func (e *Engine) Download(url string) ([]byte, error) {
-	return e.dl.Download(url)
+	return e.dl.Download(e.reqer, url)
 }

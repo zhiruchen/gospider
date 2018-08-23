@@ -6,5 +6,5 @@ type Preparer interface {
 
 // Downloader a interface for download
 type Downloader interface {
-	Download(url string) ([]byte, error)
+	Download(req Requester, url string) ([]byte, error)
 }
